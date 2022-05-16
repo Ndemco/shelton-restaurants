@@ -30,11 +30,10 @@ const RestaurantType = new GraphQLObjectType({
       id_restaurant: {type: GraphQLNonNull(GraphQLInt)},
       name: {type: GraphQLNonNull(GraphQLString)},
       address: {type: GraphQLNonNull(GraphQLString)},
-      MenuItems: {
+      menuItems: {
          type: new GraphQLList(MenuItemType),
          resolve: async (restaurant) => {
             const [rows] = await connection.promise().execute('SELECT * FROM menu_items WHERE id_restaurant = ?', [restaurant.id_restaurant]);
-            console.log(rows);
             return rows;
          }
       }
